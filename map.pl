@@ -2,22 +2,21 @@
 :- dynamic(tinggiPeta/1).
 :- dynamic(gym/2).
 :- dynamic(obstacle/2).
-
-
-
+:- dynamic(player/2).
+%--------------------------INIT MAP-----------------------------------------------
 init_map :-
+	asserta(player(1,1)),
     random(10,16,X),
     random(10,16,Y),
-    asserta(lebarPeta(X)),asserta(tinggiPeta(Y)),
-    random(1,15,A),A\==1,
-    random(1,15,B),B\==1,
-	asserta(gym(A,B)),
-	forall(upto(1,10,1,R),(
-		random(1,15,X),X\==A,X\==1,
-		random(1,15,Y),Y\==B,Y\==1,
-		asserta(obstacle(X,Y))
-	)
-
+    asserta(lebarPeta(X)),
+	asserta(tinggiPeta(Y)),
+	asserta(gym(5,5)),
+	forall(between(1,10,R),(
+		random(1,X,C),
+		random(1,Y,D),
+		asserta(obstacle(C,D))
+	)).
+%------------------------------CEK BORDER------------------------------------------
 isBorderAtas(_,Y) :-
     Y=:=0
     ,!.
@@ -34,11 +33,11 @@ isBorderKanan(X,_) :-
     XMax is L+1,
     X=:=XMax,
     !.
-
+%------------------------------PRINTMAP----------------------------------------------
 printMap(X,Y) :-
     isBorderKanan(X,Y), !, write('X').
-printPrio(X,Y) :-
-    isBorderKiri(X,Y), !, write('X').
+printMap(X,Y) :-
+	isBorderKiri(X,Y),!,write('X').
 printMap(X,Y) :-
     isBorderAtas(X,Y), !, write('X').
 printMap(X,Y) :-
@@ -51,3 +50,25 @@ printMap(X,Y) :-
 	obstacle(X,Y),!,write('x').
 printMap(_,_) :-
 	write('_').
+
+printM :-
+	tinggiPeta(T),
+	lebarPeta(L),
+	XMin is 0,
+	XMax is L+1,
+	YMin is 0,
+	YMax is T+1,
+	forall(between(YMin,YMax,J), (
+		forall(between(XMin,XMax,I), (
+			printMap(I,J)
+		)),
+		nl
+	)),
+	write('Keterangan Simbol :'), nl,
+	write('P    :    Player'), nl,
+	write('G    :    Gym'), nl,
+	write('X    :    Border'), nl,
+	write('x    :    Obstacle'),nl,
+	write('-    :    Empty Field'), nl,
+	!.
+

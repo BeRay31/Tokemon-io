@@ -1,3 +1,8 @@
+include(player.pl).
+include(map.pl).
+
+:- dynamic(main/1).
+
 help :-
 	write('Daftar Command : '),nl,
 	write('1. start : memulai permainan.'),nl,
@@ -26,11 +31,6 @@ start :-
 	write('Kamu tidak bisa memulai game ketika game sudah dimulai.'), nl, !.
 	
 start :-
-	write(' _____  ____  _  __ _____ _      ____  _'),nl,     
-	write('/__ __\/  _ \/ |/ //  __// \__/|/  _ \/ \  /|'),nl,
-	write('  / \  | / \||   / |  \  | |\/||| / \|| |\ ||'),nl,
-	write('  | |  | \_/||   \ |  /_ | |  ||| \_/|| | \||'),nl,
-	write('  \_/  \____/\_|\_\\____\\_/  \|\____/\_/  \|'),nl,
 	write('Gotta catch em all!.'),nl,nl,nl,
 	write('Hello there! Welcome to the world of Tokemon! My name is Aril! (BODOAMAT)'),nl,
 	write('People call me the Tokemon Professor! This world is inhabited by'),nl,
@@ -42,6 +42,7 @@ start :-
 	nl,
 	write('Game Mulai'),nl,
 	help,nl,nl,
+	init_player,
 	init_map,
 	!.
 	
@@ -65,11 +66,11 @@ map :-
 		nl
 	)),
 	write('Keterangan Simbol :'), nl,
-	write('P    :    Player'), nl,
-	write('X    :    Border'), nl,
-	write('x    :    Obstacle'), nl,
-	write('G	:	 Gym'),nl,
-	write('_    :    Lahan kosong'), nl,
+	write('P:Player'), nl,
+	write('X:Border'), nl,
+	write('x:Obstacle'), nl,
+	write('G:Gym'),nl,
+	write('_:Lahan kosong'), nl,
 	!.
 
 
@@ -80,6 +81,11 @@ w :-
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 w :-
+	player(X,Y),
+	Ytemp is Y - 1,
+	obstacle(X,Ytemp),
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
+w :-
 	retract(player(X,Y)),
 	Y > 1,
 	YBaru is Y-1,
@@ -89,7 +95,11 @@ d :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
-
+d :-
+	player(X,Y),
+	Xtemp is X + 1,
+	obstacle(Xtemp,Y),
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
 d :-
 	retract(player(X,Y)),
 	lebarPeta(Le),
@@ -101,7 +111,11 @@ a :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
-
+a :-
+	player(X,Y),
+	Xtemp is X - 1,
+	obstacle(Xtemp,Y),
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
 a :-
 	retract(player(X,Y)),
 	X > 1,
@@ -113,7 +127,11 @@ s :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
-
+w :-
+	player(X,Y),
+	Ytemp is Y + 1,
+	obstacle(X,Ytemp),
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
 s :-
 	retract(player(X,Y)),
 	tinggiPeta(Ti),

@@ -3,10 +3,10 @@
 
 /* ****Fact**** */
 
-/*tokemon(Nama,Tipe,HP,NA,SA)*/
-tokemon(mababoi,leaves,435,70,170).
-tokemon(kuyang,Dark,989,150,225).
-tokemon(bebasmon,Light,480,60,120).
+/*tokemon(ID,Nama,Tipe,HP,NA,SA)*/
+tokemon(1,mababoi,leaves,435,70,170).
+tokemon(2,bebasmon,Light,480,60,120).
+tokemon(99,kuyang,Dark,989,150,225).
 
 /*Legendary(X)*/
 legendary(kuyang).
