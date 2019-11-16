@@ -91,6 +91,6 @@ cekPlace(X,Y) :-
 	Index=<50,
 	tokemon(Index,Name,Type,HP,_,_),
 	\+(inventory(Name,_)),
-	battleStart(Index),!.
+	%battleStart(Index),!.
 cekPlace(_,_) :-
 	write('Padang rumput yang hijau...'),!.

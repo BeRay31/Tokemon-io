@@ -46,15 +46,21 @@ status :-
 		)),!.
 
 %---------------------------------------HEAL-------------------------
+/*Jika sedang battle, command dinonaktifkan. Jika tidak sedang battle masuk ke rules heal selanjutnya*/
 heal :-
 	inBattle,
 	write('Sedang battle command dinonaktifkan...'),nl,!.
+/*Mengecek heal avaliable.
+Jika heal tidak avaliable, tidak bisa heal.
+Jika heal availiable, lanjut ke rules heal selanjutnya. */
 heal :-
 	\+healAvl(_),
 	write('Cuma bisa sekali ngeheal yak!!'),!.
+/*Mengecek player di gym atau tidak. Jika player tidak berada di gym, player tidak bisa heal. Jika berada di gym, lanju*/
 heal :-
 	\+(player(5,5)),
 	write('Gabole bray lu di padang rumput sekarang'),nl,!.
+/**/
 heal :-
 	player(5,5),
 	forall(inventory(N,_),

@@ -1,10 +1,3 @@
-/* ****Kelompok 10**** */
-
-
-/* ****Fact**** */
-
-/*tokemon(ID,Nama,Tipe,HP,NA,SA)*/
-%normal
 tokemon(1,mababoi,leaves,435,70,170).
 tokemon(2,bebasmon,light,480,60,120).
 tokemon(3,uts,fire,480,90,190).
@@ -47,8 +40,6 @@ tokemon(40,ghoul,dark,475,30,285).
 tokemon(41,angel,light,340,15,290).
 tokemon(42,doll,dark,350,35,295).
 tokemon(43,mutan,dark,360,45,210).
-
-%legend
 tokemon(44,qilin,light,980,150,225).
 tokemon(45,vermilion,light,990,155,235).
 tokemon(46,azuredragon,fire,970,160,245).
