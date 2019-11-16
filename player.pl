@@ -18,8 +18,6 @@ quit :-
 quit :- 
 	retract(player(_,_)),
 	retract(main(_)).
-	
-
 
 drop(X):-
 	retract(inventory(X)).
@@ -29,9 +27,9 @@ status :-
 	inventory(_)->(
 		forall(inventory(N),
 		(
-			tokemon(N,T,Hp,_,_),
-			write('		-'),write(N),nl,
-			write('		Health	: '),write(Hp),nl,
-			write('		Type 	: '),write(T),nl,nl,nl
+			tokemon(_,N,T,Hp,_,_),
+			write(N),nl,
+			write('Health	: '),write(Hp),nl,
+			write('Type 	: '),write(T),nl
 		)
 		)),!.

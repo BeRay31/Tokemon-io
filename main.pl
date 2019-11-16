@@ -4,6 +4,7 @@ include(map.pl).
 :- dynamic(main/1).
 
 help :-
+	
 	write('Daftar Command : '),nl,
 	write('1. start : memulai permainan.'),nl,
 	write('2. help : menampilkan fungsi-fungsi yang dapat dipanggil dalam permainan dan informasi lain.'),nl,
@@ -24,13 +25,24 @@ help :-
 	write('17. load (filename) : Memuat data permainan dari file eksternal.'),nl,
 	write('Catatan : Semua command di atas diakhiri titik (Misal : "help.")'), nl, !.
 
-
+%-------------------------------START------------------------------------------------
 
 start :-
 	main(_),
 	write('Kamu tidak bisa memulai game ketika game sudah dimulai.'), nl, !.
 	
 start :-
+	write(' _________________       _____     ____    ____       ______        ______  _______           _____  _____   ______'),nl,   
+	write('/                 \\ ____|\\    \\   |    |  |    |  ___|\\     \\      |      \\/       \\     ____|\\    \\|\\    \\ |\\     \\'),nl,  
+	write('\\______     ______//     /\\    \\ |    |  |    | |     \\     \\    /          /\\     \\   /     /\\    \\\\\\    \\| \\     \\'),nl, 
+	write('   \\( /    /  )/  /     /  \\    \\ |    | /    // |     ,_____/|  /     /\\   / /\\     | /     /  \\    \\|    \\  \\     |'),nl,
+	write('      |   |      |     |    |    ||    |/ _ _//  |     \\-- \\_|/ /     /\\ \\_/ / /    /||     |    |    ||     \\  |    |'),nl,
+	write('      |   |      |     |    |    ||    |\\    \\   |     /___/|  |     |  \\|_|/ /    / ||     |    |    ||      \\ |    |'),nl,
+	write('     /   //      |\\     \\  /    /||    | \\    \\  |     \\____|\\ |     |       |    |  ||\\     \\  /    /||    |\\ \\|    |'),nl,
+	write('    /___//       | \\_____\\/____/ ||____|  \\____\\ |____       /||\\____\\       |____|  /| \\_____\\/____/ ||____||\\_____/|'),nl,
+	write('   |    |         \\ |    ||    | /|    |   |    ||    /_____/ || |    |      |    | /  \\ |    ||    | /|    |/ \\|   ||'),nl,
+	write('   |____|          \\|____||____|/ |____|   |____||____|     | / \\|____|      |____|/    \\|____||____|/ |____|   |___|/'),nl,
+	write('     \\(               \\(    )/      \\(       )/    \\( |_____|/     \\(          )/          \\(    )/      \\(       )/'),nl,
 	write('Gotta catch em all!.'),nl,nl,nl,
 	write('Hello there! Welcome to the world of Tokemon! My name is Aril! (BODOAMAT)'),nl,
 	write('People call me the Tokemon Professor! This world is inhabited by'),nl,
@@ -41,13 +53,11 @@ start :-
 	write('not kill you.'),nl,
 	nl,
 	write('Game Mulai'),nl,
-	help,nl,nl,
 	init_player,
 	init_map,
 	!.
 	
-
-
+%------------------------------------------------MAP-------------------
 map :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
@@ -72,6 +82,7 @@ map :-
 	write('G:Gym'),nl,
 	write('_:Lahan kosong'), nl,
 	!.
+%---------------------------------------HEAL-------------------------
 
 
 
