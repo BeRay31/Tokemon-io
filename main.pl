@@ -1,10 +1,8 @@
-include(player.pl).
-include(map.pl).
+:- include('player.pl').
+:- include('map.pl').
 
-:- dynamic(main/1).
-
-help :-
-	
+/*Menampilkan fungsi-fungsi yang dapat dipanggil dalam permainan.*/
+help :-	
 	write('Daftar Command : '),nl,
 	write('1. start : memulai permainan.'),nl,
 	write('2. help : menampilkan fungsi-fungsi yang dapat dipanggil dalam permainan dan informasi lain.'),nl,
@@ -27,10 +25,12 @@ help :-
 
 %-------------------------------START------------------------------------------------
 
+/*Memulai permainan*/
 start :-
 	main(_),
 	write('Kamu tidak bisa memulai game ketika game sudah dimulai.'), nl, !.
-	
+
+/*Menampilkan judul dan instruksi permainan*/	
 start :-
 	write(' _________________       _____     ____    ____       ______        ______  _______           _____  _____   ______'),nl,   
 	write('/                 \\ ____|\\    \\   |    |  |    |  ___|\\     \\      |      \\/       \\     ____|\\    \\|\\    \\ |\\     \\'),nl,  
@@ -44,12 +44,12 @@ start :-
 	write('   |____|          \\|____||____|/ |____|   |____||____|     | / \\|____|      |____|/    \\|____||____|/ |____|   |___|/'),nl,
 	write('     \\(               \\(    )/      \\(       )/    \\( |_____|/     \\(          )/          \\(    )/      \\(       )/'),nl,
 	write('Gotta catch em all!.'),nl,nl,nl,
-	write('Hello there! Welcome to the world of Tokemon! My name is Aril! (BODOAMAT)'),nl,
+	write('Hello there! Welcome to the world of Tokemon! My name is Aril!'),nl,
 	write('People call me the Tokemon Professor! This world is inhabited by'),nl,
 	write('creatures called Tokemon! There are hundreds of Tokemon loose in '),nl,
 	write('Labtek 5! You can catch them all to get stronger, but what I\'m'),nl,
-	write('really interested in are the 2 legendary Tokemons, Icanmon dan '),nl,
-	write('Sangemon. If you can defeat or capture all those Tokemons I will'),nl,
+	write('really interested in are the  legendary Tokemons.'),nl,
+	write('If you can defeat or capture all those Tokemons I will'),nl,
 	write('not kill you.'),nl,
 	nl,
 	write('Game Mulai'),nl,
@@ -58,6 +58,11 @@ start :-
 	!.
 	
 %------------------------------------------------MAP-------------------
+
+/*Mencetak peta permainan saat ini beserta lokasi pemain, obstacle, lahan kosong, dan */
+map :-
+	inBattle,
+	write('Sedang battle command dinonaktifkan'),nl,!.
 map :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
@@ -76,77 +81,97 @@ map :-
 		nl
 	)),
 	write('Keterangan Simbol :'), nl,
-	write('P:Player'), nl,
-	write('X:Border'), nl,
-	write('x:Obstacle'), nl,
-	write('G:Gym'),nl,
-	write('_:Lahan kosong'), nl,
+	write('P : Player'), nl,
+	write('X : Obstacle'), nl,
+	write('G : Gym'),nl,
+	write('_ : Padang rumput'), nl,
 	!.
-%---------------------------------------HEAL-------------------------
-
-
 
 /* Movement */
 w :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
+w :- 
+	inBattle,
+	write('Sedang battle command dinonaktifkan'),nl,!.
 w :-
 	player(X,Y),
 	Ytemp is Y - 1,
 	obstacle(X,Ytemp),
-	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!, cari rute lain ..'),!.
 w :-
 	retract(player(X,Y)),
 	Y > 1,
 	YBaru is Y-1,
+	format('Pindah ke -> '),
 	write([X,YBaru]),nl,
-	asserta(player(X,YBaru)),!.
+	asserta(player(X,YBaru)),
+	cekPlace(X,YBaru),!.
 d :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 d :-
+	inBattle,
+	write('Sedang battle command dinonaktifkan'),nl,!.
+d :-
 	player(X,Y),
 	Xtemp is X + 1,
 	obstacle(Xtemp,Y),
-	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!, cari rute lain ..'),!.
 d :-
 	retract(player(X,Y)),
 	lebarPeta(Le),
 	X < Le,
 	XBaru is X+1,
+	format('Pindah ke -> '),
 	write([XBaru,Y]),nl,
-	asserta(player(XBaru,Y)),!.
+	asserta(player(XBaru,Y)),
+	cekPlace(XBaru,Y),!.
 a :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
+a:-
+	inBattle,
+	write('Sedang battle command dinonaktifkan'),nl,!.
 a :-
 	player(X,Y),
 	Xtemp is X - 1,
 	obstacle(Xtemp,Y),
-	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!, cari rute lain ..'),!.
 a :-
 	retract(player(X,Y)),
 	X > 1,
 	XBaru is X-1,
+	format('Pindah ke -> '),
 	write([XBaru,Y]),nl,
-	asserta(player(XBaru,Y)),!.
+	asserta(player(XBaru,Y)),
+	cekPlace(XBaru,Y),!.
 	
 s :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
-w :-
+s :- 
+	inBattle,
+	write('Sedang battle command dinonaktifkan'),nl,!.
+s :-
 	player(X,Y),
 	Ytemp is Y + 1,
 	obstacle(X,Ytemp),
-	write('DUARRRR!!!!!!!! Nabrakkkk!!!!').
+	write('DUARRRR!!!!!!!! Nabrakkkk!!!!, cari rute lain ..'),!.
 s :-
 	retract(player(X,Y)),
 	tinggiPeta(Ti),
 	Y < Ti,
 	YBaru is Y+1,
+	format('Pindah ke -> '),
 	write([X,YBaru]),nl,
-	asserta(player(X,YBaru)),!.
+	asserta(player(X,YBaru)),
+	cekPlace(X,YBaru),!.
+
+
+
+
