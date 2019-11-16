@@ -1,6 +1,5 @@
-:- include('player.pl').
 :- include('database.pl').
-:- 
+:- include('player.pl').
 
 :- dynamic(inBattle/0).
 :- dynamic(enemy/3).
