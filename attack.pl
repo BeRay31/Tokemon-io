@@ -109,9 +109,8 @@ specialAttack :-
     write('Cuma bisa dilakukan dalam battle'), !.
 specialAttack :-
     inBattle,
-    specialUsed,
-    write('Special Attack cuma bisa dipakai sekali per battle'), nl,
-    !.
+    specialUsed, !,
+    write('Special Attack cuma bisa dipakai sekali per battle'), nl.
 specialAttack :-
     inBattle,
     battleTokemon(Name),
@@ -147,8 +146,9 @@ typeModifier(Damage, _, _, Result) :-
     Result is Damage.
 
 enemyTurn(Num) :-
-    Num =< 70,
+    Num =< 70, !,
     battleTokemon(Name),
+    inventory(Name, HP),
     retract(inventory(Name, HP)),
     enemy(EName, _),
     tokemon(_, EName, _,_, ENA, _),
@@ -162,15 +162,15 @@ enemyTurn(Num) :-
         asserta(inventory(Name, HPNew))
     ),
     afterEnemyTurn,
-    !.
+    enemyTurn(Num).
 
 enemyTurn(Num) :-
     Num > 70,
-    eSpecialUsed,
-    enemyTurn(1), !.
+    eSpecialUsed, !,
+    enemyTurn(1).
 
 enemyTurn(Num) :-
-    Num > 70,
+    Num > 70, !,
     \+ eSpecialUsed,
     battleTokemon(Name),
     retract(inventory(Name, HP)),
@@ -188,8 +188,7 @@ enemyTurn(Num) :-
         asserta(inventory(Name, HPNew))
     ),
     asserta(eSpecialUsed),
-    afterEnemyTurn,
-    !.
+    afterEnemyTurn.
 
 afterEnemyTurn :-
     countInventory(Length),
