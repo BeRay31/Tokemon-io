@@ -10,7 +10,7 @@
 
 battleStart(Index) :-
     asserta(inBattle),
-    tokemon(Index, Nama, Tipe, HP, _, _),
+    tokemon(Index, Nama, _, HP, _, _),
     asserta(enemy(Nama, HP)),
     write('A wild '), write(Nama), write(' appeared!'), nl,
     write('Fight or Run?'),
@@ -47,12 +47,12 @@ attack :-
     inBattle,
     battleTokemon(Name),
     tokemon(_, Name, _, _, NA, _),
-    inventory(Name, HP),
+    inventory(Name, _),
     retract(enemy(EName, EHP)),
     tokemon(_, EName, _, _, _, _),
     EHPNew is EHP - NA,
     write(Name), write(' attacks!'), nl,
-    (EHPNew =< 0)->((
+    (EHPNew =< 0)->(
         write(EName), write(' fainted'), nl,
         asserta(enemyFainted)
     );
@@ -60,8 +60,8 @@ attack :-
         write(EName), write(' took '), write(NA), write(' damage!'), nl,
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),
-        enemyTurn(R),
-    )),
+        enemyTurn(R)
+    ),
     !.
 
 specialAttack :-
@@ -71,12 +71,12 @@ specialAttack :-
     inBattle,
     battleTokemon(Name),
     tokemon(_, Name, _, _, _, SA),
-    inventory(Name, HP),
+    inventory(Name, _),
     retract(enemy(EName, EHP)),
     tokemon(_, EName, _, _, _, _),
     EHPNew is EHP - SA,
     write(Name), write(' uses their special attack!'), nl,
-    (EHPNew =< 0)->((
+    (EHPNew =< 0)->(
         write(EName), write(' fainted'), nl,
         asserta(enemyFainted)
     );
@@ -84,8 +84,8 @@ specialAttack :-
         write(EName), write(' took '), write(SA), write(' damage!'), nl,
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),
-        enemyTurn(R),
-    )),
+        enemyTurn(R)
+    ),
     !.
 
 enemyTurn(Num) :-
