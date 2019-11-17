@@ -1,4 +1,5 @@
-/*Fakta yang dapat ditambah dan dikurangkan*/
+:- include('database.pl').
+
 :- dynamic(lebarPeta/1).
 :- dynamic(tinggiPeta/1).
 :- dynamic(gym/2).
@@ -76,21 +77,3 @@ printMap(X,Y) :-
 /*Jika kondisi printMap sebelumnya tidak memenuhi, Map menjadi lahan kosong*/
 printMap(_,_) :-
 	write('_').
-
-%-------------------------CEK PLACE --------------------------
-
-/*Jika player berada di gym, beritahu player, bahwa player berada di gym.
-Jika tidak, masuk ke cekPlace selanjutnya*/
-cekPlace(X,Y) :-
-	gym(X,Y),
-	write('Anda berada di Gym , bisa ngeheal tokemon lohh!!!!'),!.
-
-/**/
-cekPlace(X,Y) :-
-	random(1,150,Index),
-	Index=<50,
-	tokemon(Index,Name,Type,HP,_,_),
-	\+(inventory(Name,_)),
-	%battleStart(Index),!.
-cekPlace(_,_) :-
-	write('Padang rumput yang hijau...'),!.

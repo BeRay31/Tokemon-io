@@ -1,4 +1,4 @@
-tokemon(1,mababoi,leaves,435,70,170).
+tokemon(1,mababoi,dark,430,70,190).
 tokemon(2,bebasmon,light,480,60,120).
 tokemon(3,uts,fire,480,90,190).
 tokemon(4,uas,fire,495,95,220).

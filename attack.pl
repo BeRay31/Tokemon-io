@@ -1,11 +1,11 @@
 :- include('player.pl').
-:- include('database.pl').
+
 
 :- dynamic(inBattle/0).
 :- dynamic(enemy/2).
 :- dynamic(enemyFainted/0).
 :- dynamic(specialUsed/0).
-:- dynamc(eSpecialUsed/0).
+:- dynamic(eSpecialUsed/0).
 :- dynamic(gameOver/0).
 
 battleStart(Index) :-

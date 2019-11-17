@@ -1,5 +1,3 @@
-:- include('player.pl').
-:- include('map.pl').
 :- include ('attack.pl').
 
 /*Menampilkan fungsi-fungsi yang dapat dipanggil dalam permainan.*/
@@ -94,7 +92,7 @@ w :-
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 w :- 
-	%inBattle,
+	inBattle,
 	write('Sedang battle command dinonaktifkan'),nl,!.
 w :-
 	player(X,Y),
@@ -114,7 +112,7 @@ d :-
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 d :-
-	%inBattle,
+	inBattle,
 	write('Sedang battle command dinonaktifkan'),nl,!.
 d :-
 	player(X,Y),
@@ -135,7 +133,7 @@ a :-
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 a:-
-	%inBattle,
+	inBattle,
 	write('Sedang battle command dinonaktifkan'),nl,!.
 a :-
 	player(X,Y),
@@ -156,7 +154,7 @@ s :-
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 s :- 
-	%inBattle,
+	inBattle,
 	write('Sedang battle command dinonaktifkan'),nl,!.
 s :-
 	player(X,Y),

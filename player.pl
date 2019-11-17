@@ -1,6 +1,5 @@
 :- include('map.pl').
-:- include('database.pl').	
-:- include('attack.pl').
+
 
 /*Fakta yang dapat ditambah dan dikurangkan*/
 :- dynamic(inventory/2).			/* inventory(NamaTokemon, HP) */
@@ -115,3 +114,20 @@ addTokemon(Nama) :-
 countUniqueLegend(Length) :-
 	findall(legend(Name),inventory(Name,_),List),
 	length(List,Length),!.
+%-------------------------CEK PLACE --------------------------
+
+/*Jika player berada di gym, beritahu player, bahwa player berada di gym.
+Jika tidak, masuk ke cekPlace selanjutnya*/
+cekPlace(X,Y) :-
+	gym(X,Y),
+	write('Anda berada di Gym , bisa ngeheal tokemon lohh!!!!'),!.
+
+/**/
+cekPlace(X,Y) :-
+	random(1,150,Index),
+	Index=<50,
+	tokemon(Index,Name,Type,HP,_,_),
+	\+(inventory(Name,_)),
+	battleStart(Index),!.
+cekPlace(_,_) :-
+	write('Padang rumput yang hijau...'),!.
