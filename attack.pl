@@ -7,6 +7,7 @@
 :- dynamic(specialUsed/0).
 :- dynamic(eSpecialUsed/0).
 :- dynamic(gameOver/0).
+:- dynamic(cantRun/0).
 
 battleStart(Index) :-
     asserta(inBattle),
@@ -22,12 +23,20 @@ fight :-
     write('Cuma bisa dilakukan dalam battle'), !.
 fight :-
     inBattle,
+    asserta(cantRun),
     write('Choose '), status, !.
 
 run :-
     \+ inBattle,
-    write('Cuma bisa dilakukan dalam battle'), !.
+    write('Cuma bisa dilakukan dalam battle'), 
+    !.
 run :-
+    inBattle,
+    cantRun,
+    write('There is no escape.'), nl,
+    !.
+run :-
+    \+ cantRun,
     inBattle,
     random(0, 6, R),
     (R > 3,
@@ -108,7 +117,8 @@ enemyTurn(Num) :-
 
 enemyTurn(Num) :-
     Num > 70,
-    eSpecialUsed, !.
+    eSpecialUsed,
+    enemyTurn(1), !.
 
 enemyTurn(Num) :-
     Num > 70,
@@ -137,6 +147,7 @@ afterEnemyTurn :-
     retract(enemy(_, _)),
     retract(specialUsed),
     retract(eSpecialUsed),
+    retract(cantRun),
     !.
 
 afterEnemyTurn :-
