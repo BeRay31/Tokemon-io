@@ -52,7 +52,7 @@ attack :-
     tokemon(_, EName, _, _, _, _),
     EHPNew is EHP - NA,
     write(Name), write(' attacks!'), nl,
-    (EHPNew =< 0)->(
+    (EHPNew =< 0)->((
         write(EName), write(' fainted'), nl,
         asserta(enemyFainted)
     );
@@ -61,7 +61,7 @@ attack :-
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),
         enemyTurn(R),
-    ),
+    )),
     !.
 
 specialAttack :-
@@ -76,7 +76,7 @@ specialAttack :-
     tokemon(_, EName, _, _, _, _),
     EHPNew is EHP - SA,
     write(Name), write(' uses their special attack!'), nl,
-    (EHPNew =< 0)->(
+    (EHPNew =< 0)->((
         write(EName), write(' fainted'), nl,
         asserta(enemyFainted)
     );
@@ -85,7 +85,7 @@ specialAttack :-
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),
         enemyTurn(R),
-    ),
+    )),
     !.
 
 enemyTurn(Num) :-

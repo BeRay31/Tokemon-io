@@ -1,4 +1,4 @@
-:- include ('attack.pl').
+:- include('attack.pl').
 
 /*Menampilkan fungsi-fungsi yang dapat dipanggil dalam permainan.*/
 help :-	
