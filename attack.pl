@@ -215,7 +215,8 @@ enemyTurn(Num) :-
 
 enemyTurn(Num) :-
     Num > 70,
-    eSpecialUsed, !, fail.
+    eSpecialUsed, !,
+    enemyTurn(1).
 
 enemyTurn(Num) :-
     Num > 70,
@@ -271,7 +272,6 @@ afterEnemyTurn :-
 afterEnemyTurn :-
     countInventory(Length),
     \+ (Length =:= 0),
-    battleStatus,
     !.
 
 capture :-
