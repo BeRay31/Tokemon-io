@@ -54,19 +54,19 @@ status :-
 /*Jika sedang battle, command dinonaktifkan. Jika tidak sedang battle masuk ke rules heal selanjutnya*/
 heal :-
 	inBattle,
-	write('Sedang battle command dinonaktifkan...'),nl,!.
+	write('GABISAA!!! lo dalam battle.!!'),nl,!.
 
 /*Mengecek heal avaliable.
 Jika heal tidak avaliable, tidak bisa heal.
 Jika heal availiable, lanjut ke rules heal selanjutnya. */
 heal :-
 	\+healAvl(_),
-	write('Cuma bisa sekali ngeheal yak!!'),!.
+	write('Sekali doang ngeheal !'),!.
 
 /*Mengecek player di gym atau tidak. Jika player tidak berada di gym, player tidak bisa heal. Jika berada di gym, lanju*/
 heal :-
 	\+(player(5,5)),
-	write('Gabole bray lu di padang rumput sekarang'),nl,!.
+	write('LIAT TEMPAT!! Mana ada tempat ngeheal disini!'),nl,!.
 
 /*Player berada di gym. Heal dapat dilakukan.*/
 heal :-
@@ -78,13 +78,13 @@ heal :-
 		asserta(inventory(N,HP))
 	)),!,
 	retract(healAvl(_)),
-	write('Tokemon Sehat dan Kuat...'),nl.
+	write('Tokemon diberi obat Kuat supaya sehat dan kuat.!'),nl.
 
 %---------------------------------------DROP-------------------------
 /*Menonaktifkan command drop, jika berada di dalam battle.*/
 drop(Name):-
 	inBattle,
-	write('Sedang battle command dinonaktifkan'),nl,!.
+	write('WOI Mau buang siapa lo, lo dalam battle !'),nl,!.
 
 /*Jika tokemon di inventory tinggal 1, tokemon tidak dapat dibuang.*/
 drop(Name) :-
@@ -143,7 +143,7 @@ addTokemon(Nama) :-
 Jika tidak, masuk ke cekPlace selanjutnya*/
 cekPlace(X,Y) :-
 	gym(X,Y),
-	write('Anda berada di Gym , bisa ngeheal tokemon lohh!!!!'),!.
+	write('Lo di Gym , bisa ngeheal tokemon lohh tapi cuma sekali!!!!'),!.
 
 /**/
 cekPlace(X,Y) :-

@@ -43,13 +43,13 @@ start :-
 	write('   |____|          \\|____||____|/ |____|   |____||____|     | / \\|____|      |____|/    \\|____||____|/ |____|   |___|/'),nl,
 	write('     \\(               \\(    )/      \\(       )/    \\( |_____|/     \\(          )/          \\(    )/      \\(       )/'),nl,
 	write('Gotta catch em all!.'),nl,nl,nl,
-	write('Hello there! Welcome to the world of Tokemon! My name is Aril!'),nl,
-	write('People call me the Tokemon Professor! This world is inhabited by'),nl,
-	write('creatures called Tokemon! There are hundreds of Tokemon loose in '),nl,
-	write('Labtek 5! You can catch them all to get stronger, but what I\'m'),nl,
-	write('really interested in are the  legendary Tokemons.'),nl,
-	write('If you can defeat or capture all those Tokemons I will'),nl,
-	write('not kill you.'),nl,
+	write('Welcome di dunia Tokemon!,Kenalin Gue Asyraf '),nl,
+	write('Orang Orang manggil gue Profesor Tokemon, dunia ini dihuni oleh'),nl,
+	write('makhluk yang disebut tokemon dan tentunya lo dan gue juga.'),nl,
+	write('Lo bisa tangkep mereka dan menjadi kuat , tapi perhatian gue'),nl,
+	write('cuma tokemon legend ada 7 jumlahnya.'),nl,
+	write('.jika lo bisa nangkep itu semua maka lo gue biarin hidup'),nl,
+	write('kalo lo gapunya tokemon lagi siap siap aja kayang.'),nl,
 	nl,
 	write('Game Mulai'),nl,
 	init_player,
@@ -61,7 +61,7 @@ start :-
 /*Mencetak peta permainan saat ini beserta lokasi pemain, obstacle, lahan kosong, dan */
 map :-
 	inBattle,
-	write('Sedang battle command dinonaktifkan'),nl,!.
+	write('NGAWURRR!!! lo Dalam Battle gabisa liat map'),nl,!.
 map :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
@@ -95,7 +95,7 @@ w :-
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 w :- 
 	inBattle,
-	write('Sedang battle command dinonaktifkan'),nl,!.
+	write('MAU KEMANA!!! lo dalam battle gabisa kemana-mana!'),nl,!.
 w :-
 	player(X,Y),
 	Ytemp is Y - 1,
@@ -116,7 +116,7 @@ d :-
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 d :-
 	inBattle,
-	write('Sedang battle command dinonaktifkan'),nl,!.
+	write('MAU KEMANA!!! lo dalam battle gabisa kemana-mana!'),nl,!.
 d :-
 	player(X,Y),
 	Xtemp is X + 1,
@@ -138,7 +138,7 @@ a :-
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 a:-
 	inBattle,
-	write('Sedang battle command dinonaktifkan'),nl,!.
+	write('MAU KEMANA!!! lo dalam battle gabisa kemana-mana!'),nl,!.
 a :-
 	player(X,Y),
 	Xtemp is X - 1,
@@ -159,7 +159,7 @@ s :-
 	write('Gunakan command "start." untuk memulai game.'), nl, !.
 s :- 
 	inBattle,
-	write('Sedang battle command dinonaktifkan'),nl,!.
+	write('MAU KEMANA!!! lo dalam battle gabisa kemana-mana!'),nl,!.
 s :-
 	player(X,Y),
 	Ytemp is Y + 1,
