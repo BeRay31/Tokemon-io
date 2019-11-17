@@ -82,12 +82,12 @@ heal :-
 
 %---------------------------------------DROP-------------------------
 /*Menonaktifkan command drop, jika berada di dalam battle.*/
-drop(Name):-
+drop(_):-
 	inBattle,
 	write('WOI Mau buang siapa lo, lo dalam battle !'),nl,!.
 
 /*Jika tokemon di inventory tinggal 1, tokemon tidak dapat dibuang.*/
-drop(Name) :-
+drop(_) :-
 	countInventory(X),
 	X =:= 1,
 	write('Tokemon tinggal 1 gabisa dibuang dongg...'),nl,
@@ -109,7 +109,7 @@ pick(Name):-
 	\+ inventory(Name,_),
 	format('lo gapunya ~w di inventory ~n',[Name]),!.
 pick(Name) :-
-	inventory(Name,CurrentHP),
+	inventory(Name, _),
 	retract(battleTokemon(_)),
 	asserta(battleTokemon(Name)),
 	format('~w dipilih sebagai battle tokemon ~n',[Name]).
@@ -146,10 +146,10 @@ cekPlace(X,Y) :-
 	write('Lo di Gym , bisa ngeheal tokemon lohh tapi cuma sekali!!!!'),!.
 
 /**/
-cekPlace(X,Y) :-
+cekPlace(_, _) :-
 	random(1,150,Index),
 	Index=<50,
-	tokemon(Index,Name,Type,HP,_,_),
+	tokemon(Index,Name,_,_,_,_),
 	\+(inventory(Name,_)),
 	battleStart(Index),!.
 cekPlace(_,_) :-
