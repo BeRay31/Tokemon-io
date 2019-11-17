@@ -97,8 +97,8 @@ drop(Name):-
 	retract(inventory(Name,_)),
 	format('~w telah dibuang dari inventory :( ~n',[Name]).
 
-%---------------------------------------PICK-------------------------
-
+%---------------------------------------PICK & COUNT-------------------------
+/*Memilih tokemon yang dipakai untuk battle.*/
 pick(Name):-
 	\+ inventory(Name,_),
 	format('lo gapunya ~w di inventory ~n',[Name]),!.
@@ -107,10 +107,18 @@ pick(Name) :-
 	asserta(battleTokemon(Name,CurrentHP)),
 	format('~w dipilih sebagai battle tokemon ~n').
 
+/*Menghitung tokemon yang ada dalam inventory.*/
 countInventory(Length) :-
     findall(N, inventory(N,_), ListInventory),
     length(ListInventory, Length), !.
 
+/*Menghitung pokemon legend yang berada di inventory.*/
+countUniqueLegend(Length) :-
+	findall(legend(Name),inventory(Name,_),List),
+	length(List,Length),!.
+
+%---------------------------------------ADD-------------------------
+/*Menambahkan tokemon ke dalam inventori, jika tokemon sudah ada dalam inventory, penambahan akan gagal.*/
 addTokemon(_) :-
     countInventory(Length),
 	maxInventory(Max),
@@ -121,9 +129,7 @@ addTokemon(Nama) :-
 	Length < Max,
 	tokemon(_,Nama,_,HP,_,_),
 	asserta(inventory(Nama,HP)), !.	
-countUniqueLegend(Length) :-
-	findall(legend(Name),inventory(Name,_),List),
-	length(List,Length),!.
+
 %-------------------------CEK PLACE --------------------------
 
 /*Jika player berada di gym, beritahu player, bahwa player berada di gym.
