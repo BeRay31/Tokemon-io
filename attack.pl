@@ -151,7 +151,7 @@ enemyTurn(Num) :-
     battleTokemon(Name),
     retract(inventory(Name, HP)),
     enemy(EName, _),
-    tokemon(_, EName, _, ENA, _),
+    tokemon(_, EName, _,_, ENA, _),
     HPNew is HP - ENA,
     write('The enemy '), write(Name), write(' attacks!'), nl,
     (HPNew =< 0)->(
@@ -228,7 +228,8 @@ capture :-
     enemyFainted,
     retract(enemy(Name, _)),
     countInventory(Length),
-    Length < maxInventory,
+    maxInventory(MAX),
+    Length < MAX,
     addTokemon(Name),
     write(Name), write(' is captured'), nl,
     retract(inBattle),
@@ -238,7 +239,8 @@ capture :-
     inBattle,
     enemyFainted,
     countInventory(Length),
-    Length =:= maxInventory,
+    maxInventory(MAX),
+    Length =:= MAX,
     write('Inventory mu penuh. \'drop(Tokemon)\' untuk melepas salah satu Tokemonmu'), nl,
     !.
 
@@ -262,10 +264,10 @@ leave :-
 gameEnds :-
     gameOver,
     write('YOU DIED'), nl,
-    retract(main(_)),
+    quit,
     !.
 gameEnds :-
     \+ gameOver,
     write("YOU WIN"), nl,
-    retract(main(_)),
+    quit,
     !.

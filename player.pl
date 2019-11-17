@@ -29,6 +29,12 @@ quit :-
 	retract(player(_,_)),
 	retract(battleTokemon(_)),
 	retract(inventory(_,_)),
+	retract(healAvl(_)),
+	retract(lebarPeta(_)),
+	retract(tinggiPeta(_)),
+	retract(gym(_,_)),
+	retract(obstacle(_,_)),
+	retract(maxInventory(_)),
 	retract(main(_)).
 
 /*Menuliskan status tokemon dengan rincian nama, health, dan type.*/	
@@ -40,9 +46,9 @@ status :-
 			tokemon(_,Name,Type,_,_,_),
 			write(Name),nl,
 			write('Health	: '),write(Hp),nl,
-			write('Type 	: '),write(Type),nl
+			write('Type 	: '),write(Type),nl,nl
 		)
-		)),!.
+		)),nl,nl,!.
 
 %---------------------------------------HEAL-------------------------
 /*Jika sedang battle, command dinonaktifkan. Jika tidak sedang battle masuk ke rules heal selanjutnya*/
