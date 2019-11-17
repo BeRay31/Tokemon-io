@@ -45,8 +45,8 @@ status :-
 		(
 			tokemon(_,Name,Type,_,_,_),
 			write(Name),nl,
-			write('Health	: '),write(Hp),nl,
-			write('Type 	: '),write(Type),nl,nl
+			write('Health   : '),write(Hp),nl,
+			write('Type     : '),write(Type),nl,nl
 		)
 		)),nl,nl,!.
 

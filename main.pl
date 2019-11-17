@@ -49,7 +49,7 @@ start :-
 	write('Lo bisa tangkep mereka dan menjadi kuat , tapi perhatian gue'),nl,
 	write('cuma tokemon legend ada 7 jumlahnya.'),nl,
 	write('.jika lo bisa nangkep itu semua maka lo gue biarin hidup'),nl,
-	write('kalo lo gapunya tokemon lagi siap siap aja kayang.'),nl,
+	write('kalo lo gapunya tokemon lagi siap siap aja kayang sampe jadi kuyang.'),nl,
 	nl,
 	write('Game Mulai'),nl,
 	init_player,

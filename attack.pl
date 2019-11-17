@@ -25,9 +25,15 @@ battleStart(Index) :-          /*Pesan yang muncul setelah random encounter*/
     asserta(inBattle),
     tokemon(Index, Nama, _, HP, _, _),
     asserta(enemy(Nama, HP)),
-    write('A wild '), write(Nama), write(' appeared!'), nl,
+    write('Tokemon niar nyolot namanya : '), 
+    write(Nama),
+    (
+    legendary(Nama),write('(TOKEMON LEGENDARY)'),nl,write('Tangkep gann!!'); 
+    write('(Tokemon Biasa)'),nl,write('Bantaii!!')
+    ), 
+    nl,
     write('Fight or Run?'),
-    write(' (Masukkan \'fight.\' untuk bertarung atau \'run.\' untuk lari)'), nl, 
+    write(' (Masukkan \'fight.\' untuk bertarung atau \'run.\' untuk jadi pengecut :0)'), nl, 
     !.
 
 battleStatus :-                /*Munculin Nama, Health, dan Tipe Tokemon yang lagi battle*/
@@ -48,7 +54,7 @@ battleStatus :-                /*Munculin Nama, Health, dan Tipe Tokemon yang la
 
 fight :-
     \+ inBattle,
-    write('Cuma bisa dilakukan dalam battle'), !.
+    write('Gabisaa kan gaada yang nyolot'), !.
 fight :-
     inBattle,
     asserta(cantRun),
@@ -63,19 +69,19 @@ run :-
 run :-
     inBattle,
     cantRun,
-    write('There is no escape.'), nl,
+    write('Gabole kabur lu....'), nl,
     !.
 run :-
     \+ cantRun,
     inBattle,
     random(0, 6, R),
     (R > 3,
-        write('You successfully escaped!'), nl,
+        write('Bakat lo jadi pengecut'), nl,
         retract(inBattle),
         retract(enemy(_, _))
     );
     (R =< 3, 
-        write('You failed to run away!'), nl,
+        write('Tokemon terlalu garang'), nl,
         fight
     ), !.
 
@@ -92,12 +98,12 @@ attack :-
     EHPNew is EHP - NA,
     write(Name), write(' attacks!'), nl,
     (EHPNew =< 0)->(
-        write(EName), write(' fainted'), nl,
+        write(EName), write(' pusingg...'), nl,
         asserta(enemyFainted),
-        write('Input \'capture.\' to capture '), write(EName), write(' \'leave\' to leave it alone'), nl
+        write('Ketik \'capture.\' untuk nangkep '), write(EName), write(' \'leave\' untuk ninggalin dia'), nl
     );
     (
-        write(EName), write(' took '), write(NA), write(' damage!'), nl,
+        write(EName), write(' menerima '), write(NA), write(' damage!'), nl,
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),
         enemyTurn(R)
@@ -106,11 +112,11 @@ attack :-
 
 specialAttack :-
     \+ inBattle,
-    write('Cuma bisa dilakukan dalam battle'), !.
+    write('Mau nyerang siapa???????'), !.
 specialAttack :-
     inBattle,
     specialUsed,
-    write('Special Attack cuma bisa dipakai sekali per battle'), nl,
+    write('CUMA BISA SEKALI WOI!!'), nl,
     !.
 specialAttack :-
     inBattle,
@@ -119,15 +125,15 @@ specialAttack :-
     inventory(Name, _),
     retract(enemy(EName, EHP)),
     tokemon(_, EName, ETipe, _, _, _),
-    write(Name), write(' uses their special attack!'), nl,
+    write(Name), write(' nyembur pake special attack!'), nl,
     typeModifier(SA, Tipe, ETipe, Result),
     EHPNew is EHP - Result,
     (EHPNew =< 0)->(
-        write(EName), write(' fainted'), nl,
+        write(EName), write(' pusingg....'), nl,
         asserta(enemyFainted)
     );
     (
-        write(EName), write(' took '), write(SA), write(' damage!'), nl,
+        write(EName), write(' menerima '), write(SA), write(' damage!'), nl,
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),
         enemyTurn(R)
@@ -155,7 +161,7 @@ enemyTurn(Num) :-
     HPNew is HP - ENA,
     write('The enemy '), write(Name), write(' attacks!'), nl,
     (HPNew =< 0)->(
-        write(Name), write(' fainted')
+        write(Name), write(' pusingg...')
     );
     (
         write(Name), write(' took '), write(ENA), write(' damage!'), nl,
@@ -177,11 +183,11 @@ enemyTurn(Num) :-
     tokemon(_, Name, Tipe, _, _, _),
     enemy(EName, _),
     tokemon(_, EName, ETipe, _, _, ESA),
-    write('The enemy '), write(Name), write(' uses their special attack!'), nl,
+    write('tokemon musuh  '), write(Name), write(' nyembur pake special attack!'), nl,
     typeModifier(ESA, ETipe, Tipe, Result),
     HPNew is HP - Result,
     (HPNew =< 0)->(
-        write(Name), write(' fainted')
+        write(Name), write(' pusing....')
     );
     (
         write(Name), write(' took '), write(ESA), write(' damage!'), nl,
@@ -216,12 +222,12 @@ afterEnemyTurn :-
 
 capture :-
     \+ inBattle,
-    write('There is nothing to capture.'), nl,
+    write('Apa yang lo mau tangkepp????'), nl,
     !.
 capture :-
     inBattle,
     \+ enemyFainted,
-    write('Your enemy is still going strong.'), nl,
+    write('Lo terlalu lemah untuk nangkep.'), nl,
     !.
 capture :-
     inBattle,
@@ -231,7 +237,7 @@ capture :-
     maxInventory(MAX),
     Length < MAX,
     addTokemon(Name),
-    write(Name), write(' is captured'), nl,
+    write(Name), write(' Hoki lu bisa nangkep.'), nl,
     retract(inBattle),
     retract(enemyFainted),
     !.
@@ -241,7 +247,7 @@ capture :-
     countInventory(Length),
     maxInventory(MAX),
     Length =:= MAX,
-    write('Inventory mu penuh. \'drop(Tokemon)\' untuk melepas salah satu Tokemonmu'), nl,
+    write('Inventory mu full. \'drop(Tokemon)\' untuk melepas salah satu Tokemonmu'), nl,
     !.
 
 leave :-
@@ -251,7 +257,7 @@ leave :-
 leave :-
     inBattle,
     \+ enemyFainted,
-    write('It seems your enemy is not gonna let you go'), nl,
+    write('Tokemon musuh ga ngebolehin pergi.'), nl,
     !.
 leave :-
     inBattle,
@@ -263,11 +269,11 @@ leave :-
 
 gameEnds :-
     gameOver,
-    write('YOU DIED'), nl,
+    write('Lo jadi kuyang HAHAHAH!!!'), nl,
     quit,
     !.
 gameEnds :-
     \+ gameOver,
-    write("YOU WIN"), nl,
+    write('SELAMAT lo gajadi kayang'), nl,
     quit,
     !.
