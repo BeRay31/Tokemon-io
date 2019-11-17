@@ -59,7 +59,6 @@ fight :-
     inBattle,
     asserta(cantRun),
     write('Choose '), status, 
-    battleStatus,
     !.
 
 run :-
@@ -91,11 +90,9 @@ attack :-
 attack :-
     inBattle,
     battleTokemon(Name),
-    tokemon(_, Name, _, _, NA, _),
-    inventory(Name, _),
-    retract(enemy(EName, EHP)),
-    tokemon(_, EName, _, _, _, _),
-    EHPNew is EHP - NA,
+    findall(NA, tokemon(_, Name, _, _, NA, _), LNA),
+    enemy(EName, EHP),
+    EHPNew is EHP - LNA,
     write(Name), write(' attacks!'), nl,
     (EHPNew =< 0)->(
         write(EName), write(' pusingg...'), nl,
@@ -104,6 +101,7 @@ attack :-
     );
     (
         write(EName), write(' menerima '), write(NA), write(' damage!'), nl,
+        retract(enemy(_, _)),
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),
         enemyTurn(R)
@@ -121,7 +119,6 @@ specialAttack :-
     inBattle,
     battleTokemon(Name),
     tokemon(_, Name, Tipe, _, _, SA),
-    inventory(Name, _),
     retract(enemy(EName, EHP)),
     tokemon(_, EName, ETipe, _, _, _),
     write(Name), write(' nyembur pake special attack!'), nl,
@@ -143,7 +140,7 @@ specialAttack :-
 typeModifier(Damage, TipePenyerang, TipeDiserang, Result) :-
     effective(TipePenyerang, TipeDiserang),
     write('It\'s super effective!'),
-    Result is Damage + (Damage // 2), !.
+    Result is Damage * 1.5, !.
 typeModifier(Damage, TipePenyerang, TipeDiserang, Result) :-
     neffective(TipePenyerang, TipeDiserang),
     write('It\'s not very effective...'),
@@ -154,7 +151,6 @@ typeModifier(Damage, _, _, Result) :-
 enemyTurn(Num) :-
     Num =< 70, !,
     battleTokemon(Name),
-    inventory(Name, HP),
     retract(inventory(Name, HP)),
     enemy(EName, _),
     tokemon(_, EName, _,_, ENA, _),
@@ -167,13 +163,11 @@ enemyTurn(Num) :-
         write(Name), write(' took '), write(ENA), write(' damage!'), nl,
         asserta(inventory(Name, HPNew))
     ),
-    afterEnemyTurn,
-    enemyTurn(Num).
+    afterEnemyTurn.
 
 enemyTurn(Num) :-
     Num > 70,
-    eSpecialUsed, !,
-    enemyTurn(1).
+    eSpecialUsed, !, fail.
 
 enemyTurn(Num) :-
     Num > 70, !,
@@ -217,6 +211,7 @@ afterEnemyTurn :-
 afterEnemyTurn :-
     countInventory(Length),
     \+ (Length =:= 0),
+    battleStatus,
     !.
 
 capture :-
