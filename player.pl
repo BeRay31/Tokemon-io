@@ -94,8 +94,9 @@ pick(Name):-
 	format('lo gapunya ~w di inventory ~n',[Name]),!.
 pick(Name) :-
 	inventory(Name,CurrentHP),
-	asserta(battleTokemon(Name,CurrentHP)),
-	format('~w dipilih sebagai battle tokemon ~n').
+	retract(battleTokemon(_)),
+	asserta(battleTokemon(Name)),
+	format('~w dipilih sebagai battle tokemon ~n',[Name]).
 
 countInventory(Length) :-
     findall(N, inventory(N,_), ListInventory),
