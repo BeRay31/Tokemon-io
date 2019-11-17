@@ -86,7 +86,9 @@ map :-
 	write('_ : Padang rumput'), nl,
 	!.
 
-/* Movement */
+%--------------------------------------------MOVEMENT-------------------
+
+/* Gerak ke atas */
 w :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
@@ -107,6 +109,7 @@ w :-
 	write([X,YBaru]),nl,
 	asserta(player(X,YBaru)),
 	cekPlace(X,YBaru),!.
+/* Gerak ke kanan */
 d :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
@@ -128,6 +131,7 @@ d :-
 	write([XBaru,Y]),nl,
 	asserta(player(XBaru,Y)),
 	cekPlace(XBaru,Y),!.
+/* Gerak ke kiri */
 a :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,
@@ -148,7 +152,7 @@ a :-
 	write([XBaru,Y]),nl,
 	asserta(player(XBaru,Y)),
 	cekPlace(XBaru,Y),!.
-	
+/* Gerak ke bawah */	
 s :-
 	\+main(_),
 	write('Command ini hanya bisa dipakai setelah game dimulai.'), nl,

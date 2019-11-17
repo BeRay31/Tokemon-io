@@ -49,17 +49,20 @@ status :-
 heal :-
 	inBattle,
 	write('Sedang battle command dinonaktifkan...'),nl,!.
+
 /*Mengecek heal avaliable.
 Jika heal tidak avaliable, tidak bisa heal.
 Jika heal availiable, lanjut ke rules heal selanjutnya. */
 heal :-
 	\+healAvl(_),
 	write('Cuma bisa sekali ngeheal yak!!'),!.
+
 /*Mengecek player di gym atau tidak. Jika player tidak berada di gym, player tidak bisa heal. Jika berada di gym, lanju*/
 heal :-
 	\+(player(5,5)),
 	write('Gabole bray lu di padang rumput sekarang'),nl,!.
-/**/
+
+/*Player berada di gym. Heal dapat dilakukan.*/
 heal :-
 	player(5,5),
 	forall(inventory(N,_),
@@ -71,24 +74,31 @@ heal :-
 	retract(healAvl(_)),
 	write('Tokemon Sehat dan Kuat...'),nl.
 
-
+%---------------------------------------DROP-------------------------
+/*Menonaktifkan command drop, jika berada di dalam battle.*/
 drop(Name):-
 	inBattle,
 	write('Sedang battle command dinonaktifkan'),nl,!.
+
+/*Jika tokemon di inventory tinggal 1, tokemon tidak dapat dibuang.*/
 drop(Name) :-
 	countInventory(X),
 	X =:= 1,
 	write('Tokemon tinggal 1 gabisa dibuang dongg...'),nl,
 	!.
 
+/*Tokemon tidak ada di inventory*/
 drop(Name) :-
 	\+ inventory(Name,_),
 	format('~w gak ada di inventory ~n', [Name]),!.
 
+/*Berhasil dibuang*/
 drop(Name):-
 	retract(inventory(Name,_)),
 	format('~w telah dibuang dari inventory :( ~n',[Name]).
 
+%---------------------------------------PICK & COUNT-------------------------
+/*Memilih tokemon yang dipakai untuk battle.*/
 pick(Name):-
 	\+ inventory(Name,_),
 	format('lo gapunya ~w di inventory ~n',[Name]),!.
@@ -98,10 +108,18 @@ pick(Name) :-
 	asserta(battleTokemon(Name)),
 	format('~w dipilih sebagai battle tokemon ~n',[Name]).
 
+/*Menghitung tokemon yang ada dalam inventory.*/
 countInventory(Length) :-
     findall(N, inventory(N,_), ListInventory),
     length(ListInventory, Length), !.
 
+/*Menghitung pokemon legend yang berada di inventory.*/
+countUniqueLegend(Length) :-
+	findall(legend(Name),inventory(Name,_),List),
+	length(List,Length),!.
+
+%---------------------------------------ADD-------------------------
+/*Menambahkan tokemon ke dalam inventori, jika tokemon sudah ada dalam inventory, penambahan akan gagal.*/
 addTokemon(_) :-
     countInventory(Length),
 	maxInventory(Max),
@@ -112,9 +130,7 @@ addTokemon(Nama) :-
 	Length < Max,
 	tokemon(_,Nama,_,HP,_,_),
 	asserta(inventory(Nama,HP)), !.	
-countUniqueLegend(Length) :-
-	findall(legend(Name),inventory(Name,_),List),
-	length(List,Length),!.
+
 %-------------------------CEK PLACE --------------------------
 
 /*Jika player berada di gym, beritahu player, bahwa player berada di gym.
