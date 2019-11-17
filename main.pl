@@ -54,6 +54,7 @@ start :-
 	write('Game Mulai'),nl,
 	init_player,
 	init_map,
+	map,
 	!.
 	
 %------------------------------------------------MAP-------------------

@@ -1,5 +1,5 @@
 /*Tipe Tokemon : Fire, Water, Dark, Nightmare, Light*/ 
-/*Urutan kekuatan: Water<Fire<Light<Dark<Nightmare */
+/*Urutan kekuatan: Water>Fire>Light>Dark>Nightmare */
 
 tokemon(1,mababoi,dark,430,70,190).
 tokemon(2,bebasmon,light,480,60,120).

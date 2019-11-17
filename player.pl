@@ -12,7 +12,7 @@
 init_player :-
 	asserta(player(1,1)),
 	asserta(main(100)),
-	asserta(inventory(bebasmon, 435)),
+	asserta(inventory(bebasmon, 480)),
 	asserta(battleTokemon(bebasmon)),
 	asserta(maxInventory(10)),
 	asserta(healAvl(1)),
@@ -153,4 +153,4 @@ cekPlace(X,Y) :-
 	\+(inventory(Name,_)),
 	battleStart(Index),!.
 cekPlace(_,_) :-
-	write('Padang rumput yang hijau...'),!.
+	write('Padang rumput yang hijau...'),nl,!.
