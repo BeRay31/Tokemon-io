@@ -76,6 +76,10 @@ quit :-
 
 /*Menuliskan status tokemon dengan rincian nama, health, dan type.*/	
 status :-
+	\+ main(_),
+	write('Ente belum mulai main gayn'), nl,
+	!.
+status :-
 	write('Your tokemon :'),nl,
 	inventory(_,_)->(
 		forall(inventory(Name,Hp),
@@ -109,8 +113,17 @@ showInventory :-
 %---------------------------------------HEAL-------------------------
 /*Jika sedang battle, command dinonaktifkan. Jika tidak sedang battle masuk ke rules heal selanjutnya*/
 heal :-
+	\+ main(_),
+	write('Game belum mulai bang'), nl,
+	!.
+heal :-
 	inBattle,
 	write('GABISAA!!! lo dalam battle.!!'),nl,!.
+
+/*Mengecek player di gym atau tidak. Jika player tidak berada di gym, player tidak bisa heal. Jika berada di gym, lanju*/
+heal :-
+	\+(player(5,5)),
+	write('LIAT TEMPAT!! Mana ada tempat ngeheal disini!'),nl,!.
 
 /*Mengecek heal avaliable.
 Jika heal tidak avaliable, tidak bisa heal.
@@ -118,11 +131,6 @@ Jika heal availiable, lanjut ke rules heal selanjutnya. */
 heal :-
 	\+healAvl(_),
 	write('Sekali doang ngeheal !'),!.
-
-/*Mengecek player di gym atau tidak. Jika player tidak berada di gym, player tidak bisa heal. Jika berada di gym, lanju*/
-heal :-
-	\+(player(5,5)),
-	write('LIAT TEMPAT!! Mana ada tempat ngeheal disini!'),nl,!.
 
 /*Player berada di gym. Heal dapat dilakukan.*/
 heal :-
@@ -137,12 +145,11 @@ heal :-
 	write('Tokemon diberi obat Kuat supaya sehat dan kuat.!'),nl.
 
 %---------------------------------------DROP-------------------------
-/*Menonaktifkan command drop, jika berada di dalam battle.*/
-drop(_):-
-	inBattle,
-	write('WOI Mau buang siapa lo, lo dalam battle !'),nl,!.
-
 /*Jika tokemon di inventory tinggal 1, tokemon tidak dapat dibuang.*/
+drop(_) :- 
+	\+ main(_),
+	write('Start game dulu atuh'), nl, 
+	!.
 drop(_) :-
 	countInventory(X),
 	X =:= 1,
@@ -161,6 +168,10 @@ drop(Name):-
 
 %---------------------------------------PICK & COUNT-------------------------
 /*Memilih tokemon yang dipakai untuk battle.*/
+pick(_) :-
+	\+ main(_),
+	write('Start the game first pls ty'), nl, 
+	!.
 pick(Name):-
 	\+ inventory(Name,_),
 	format('lo gapunya ~w di inventory ~n',[Name]),!.
