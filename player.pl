@@ -114,15 +114,19 @@ pick(Name) :-
 	asserta(battleTokemon(Name)),
 	format('~w dipilih sebagai battle tokemon ~n',[Name]).
 
+/*Fungsi rekursif untuk menghitung anggota List*/
+listCount([], 0) :- !.
+listCount([_ | T], Length) :- listCount(T, N), Length is N + 1.
+
 /*Menghitung tokemon yang ada dalam inventory.*/
 countInventory(Length) :-
     findall(N, inventory(N,_), ListInventory),
-    length(ListInventory, Length), !.
+    listCount(ListInventory, Length), !.
 
 /*Menghitung pokemon legend yang berada di inventory.*/
 countUniqueLegend(Length) :-
 	findall(legend(Name),inventory(Name,_),List),
-	length(List,Length),!.
+	listCount(List,Length),!.
 
 %---------------------------------------ADD-------------------------
 /*Menambahkan tokemon ke dalam inventori, jika tokemon sudah ada dalam inventory, penambahan akan gagal.*/
