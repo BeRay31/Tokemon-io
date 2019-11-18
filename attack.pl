@@ -25,7 +25,7 @@ battleStart(Index) :-          /*Pesan yang muncul setelah random encounter*/
     asserta(inBattle),
     tokemon(Index, Nama, _, HP, _, _),
     (
-        retract(enemy(_,_)),asserta(enemy(Name,HP));
+        retract(enemy(_,_)),asserta(enemy(Nama,HP));
         asserta(enemy(Nama, HP))
     ),
     write('Tokemon niar nyolot namanya : '), 
@@ -121,9 +121,9 @@ attack :-
     inventory(Name, _),
     enemy(EName, EHP),
     tokemon(_, EName, ETipe, _, _, _),
+    write(Name), write(' attacks!'), nl,
     typeModifier(NA, Tipe, ETipe, Result),
     EHPNew is EHP - Result,
-    write(Name), write(' attacks!'), nl,
     ((
             EHP =< 0,
             write(EName), write(' pusingg...'), nl,
@@ -183,7 +183,7 @@ typeModifier(Damage, TipePenyerang, TipeDiserang, Result) :-
 typeModifier(Damage, _, _, Result) :-
     Result is Damage.
 
-enemyTurn(Num) :-
+enemyTurn(_) :-
     enemyFainted,
     afterEnemyTurn.
 
@@ -194,9 +194,9 @@ enemyTurn(Num) :-
     tokemon(_,Name,Tipe,_,_,_),
     enemy(EName, _),
     tokemon(_, EName, ETipe,_, ENA, _),
+    write('Tokemon musuh '), write('nyerang '),write(Name), nl,
     typeModifier(ENA, ETipe, Tipe, Result),
     HPNew is HP - Result,
-    write('Tokemon musuh '), write('nyerang '),write(Name), nl,
     ((
         HPNew =< 0,
         retract(inventory(Name, HP)),
