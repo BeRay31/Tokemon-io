@@ -133,7 +133,9 @@ run :-
 attack :-
     \+ inBattle,
     write('Ma nyerang siapa?????????'), !.
-
+attack :-
+    \+battleTokemon(_),
+    write('Pillih Tokemon dulu !!!'),nl,!.
 attack :-
     inBattle,
     battleTokemon(Name),
@@ -229,7 +231,7 @@ enemyTurn(Num) :-
     (
             HPNew =< 0,
             retract(inventory(Name,HP)),
-            retract(inventory(Name,HPNew)),
+            asserta(inventory(Name,HPNew)),
             write(Name), write(' took '), write(Result), write(' damage!'), nl,
             write(Name), write(' terbantai!!!'),nl
     )),
@@ -265,7 +267,7 @@ enemyTurn(Num) :-
     (
         HPNew =< 0,
         retract(inventory(Name,HP)),
-        retract(inventory(Name,HPNew)),
+        asserta(inventory(Name,HPNew)),
         write(Name), write(' took '), write(Result), write(' damage!'), nl,
         write(Name), write(' terbantai!!!'),nl  
     )),
@@ -290,6 +292,7 @@ afterEnemyTurn :-
 afterEnemyTurn :-
     countInventory(Length),
     Length =:= 0,
+    retract(battleTokemon(_)),
     asserta(gameOver),
     retract(inBattle),
     retract(enemy(_, _)),
@@ -298,7 +301,7 @@ afterEnemyTurn :-
         \+specialUsed
     ),
     (
-        eSpecialUsed,retract(specialUsed);
+        eSpecialUsed,retract(eSpecialUsed);
         \+eSpecialUsed
     )),
     retract(cantRun),
