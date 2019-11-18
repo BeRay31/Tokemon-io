@@ -290,9 +290,15 @@ afterEnemyTurn :-
     \+ (Length =:= 0),
     battleTokemon(Nama),
     inventory(Nama, HP),
+    ((
+        HP>0
+    )
+    ;
+    (
     HP =< 0,
     write('Pilih Tokemon lain'), nl,
-    showInventory,
+    showInventory
+    )),
     !.
 
 capture :-

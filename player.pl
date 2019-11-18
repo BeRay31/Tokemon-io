@@ -13,7 +13,6 @@ init_player :-
 	asserta(player(1,1)),
 	asserta(main(100)),
 	asserta(inventory(bebasmon, 480)),
-	asserta(battleTokemon(bebasmon)),
 	asserta(maxInventory(10)),
 	asserta(healAvl(1)),
 	!.
