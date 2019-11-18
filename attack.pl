@@ -256,6 +256,18 @@ enemyTurn(Num) :-
     ),!.
 
 afterEnemyTurn :-
+    enemyFainted,
+    (
+        specialUsed,retract(specialUsed);
+        \+specialUsed
+    ),
+    (
+         eSpecialUsed,retract(specialUsed);
+        \+eSpecialUsed
+    ),
+    !.
+
+afterEnemyTurn :-
     countInventory(Length),
     Length =:= 0,
     asserta(gameOver),
@@ -271,19 +283,7 @@ afterEnemyTurn :-
     ),
     retract(cantRun),
     gameEnds,
-    !.
-
-afterEnemyTurn :-
-    enemyFainted,
-    (
-        specialUsed,retract(specialUsed);
-        \+specialUsed
-    ),
-    (
-         eSpecialUsed,retract(specialUsed);
-        \+eSpecialUsed
-    ),
-    !.
+    !. 
 
 afterEnemyTurn :-
     countInventory(Length),
