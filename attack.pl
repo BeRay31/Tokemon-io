@@ -39,7 +39,13 @@ battleStart(Index) :-          /*Pesan yang muncul setelah random encounter*/
     write(' (Masukkan \'fight.\' untuk bertarung atau \'run.\' untuk jadi pengecut :0)'),nl, 
     !.
 
+battleStatus :-
+    countInventory(Length),
+    Length =:= 0, 
+    !.
 battleStatus :-                /*Munculin Nama, Health, dan Tipe Tokemon yang lagi battle*/
+    countInventory(Length),
+    \+ (Length =:= 0),
     battleTokemon(Nama),
     inventory(Nama, HP),
     enemy(ENama, EHP),
@@ -74,7 +80,7 @@ fight :-
     asserta(cantRun),
     (
         battleTokemon(_);
-        write('Choose '), status
+        write('Choose '), showInventory
     ),
     (
         specialUsed,retract(specialUsed);
@@ -100,7 +106,7 @@ run :-
     \+ cantRun,
     inBattle,
     random(0, 6, R),
-    (R > 3,
+    ((R > 3,
         write('Bakat lo jadi pengecut'), nl,
         retract(inBattle),
         retract(enemy(_, _))
@@ -108,7 +114,7 @@ run :-
     (R =< 3, 
         write('Tokemon terlalu garang'), nl,
         fight
-    ), !.
+    )), !.
 
 attack :-
     \+ inBattle,
@@ -131,6 +137,7 @@ attack :-
             write('Ketik \'capture.\' untuk nangkep '), write(EName), write(' \'leave\' untuk ninggalin dia'), nl
     );
     (
+            EHP > 0,
             write(EName), write(' menerima '), write(Result), write(' damage!'), nl,
             retract(enemy(EName,EHP)),
             asserta(enemy(EName, EHPNew)),
@@ -163,6 +170,7 @@ specialAttack :-
         asserta(enemyFainted)
     );
     (
+        EHPNew > 0,
         write(EName), write(' menerima '), write(SA), write(' damage!'), nl,
         retract(enemy(EName,EHP)),
         asserta(enemy(EName, EHPNew)),
@@ -203,6 +211,7 @@ enemyTurn(Num) :-
         write(Name), write(' terbantai!!!')
     );
     (
+        HPNew > 0,
         write(Name), write(' took '), write(Result), write(' damage!'), nl,
         retract(inventory(Name, HP)),
         asserta(inventory(Name, HPNew))
@@ -229,22 +238,17 @@ enemyTurn(Num) :-
     write('tokemon musuh nyembur '), write(Name), write(' pake special attack!'), nl,
     typeModifier(ESA, ETipe, Tipe, Result),
     HPNew is HP - Result,
-    (HPNew =< 0)->(
+    ((
+        HPNew =< 0,
         write(Name), write(' terbantai!!!'),
-        retract(inventory(Name,HP))
+        retract(inventory(Name,HP))    
     );
     (
-        battleTokemon(Name),
-        inventory(Name, HP),
-        tokemon(_, Name, Tipe, _, _, _),
-        enemy(EName, _),
-        tokemon(_, EName, ETipe, _, _, ESA),
-        typeModifier(ESA, ETipe, Tipe, Result),
-        HPNew is HP - Result,    
+        HPNew > 0,
         write(Name), write(' took '), write(ESA), write(' damage!'), nl,
         retract(inventory(Name,HP)),
         asserta(inventory(Name, HPNew))
-    ),
+    )),
     asserta(eSpecialUsed),
     (
         battleStatus,
@@ -257,21 +261,38 @@ afterEnemyTurn :-
     asserta(gameOver),
     retract(inBattle),
     retract(enemy(_, _)),
-    retract(specialUsed),
-    retract(eSpecialUsed),
+    (
+        specialUsed,retract(specialUsed);
+        \+specialUsed
+    ),
+    (
+        eSpecialUsed,retract(specialUsed);
+        \+eSpecialUsed
+    ),
     retract(cantRun),
     gameEnds,
     !.
 
 afterEnemyTurn :-
     enemyFainted,
-    retract(specialUsed),
-    retract(eSpecialUsed),
+    (
+        specialUsed,retract(specialUsed);
+        \+specialUsed
+    ),
+    (
+         eSpecialUsed,retract(specialUsed);
+        \+eSpecialUsed
+    ),
     !.
 
 afterEnemyTurn :-
     countInventory(Length),
     \+ (Length =:= 0),
+    battleTokemon(Nama),
+    inventory(Nama, HP),
+    HP =< 0,
+    write('Pilih Tokemon lain'), nl,
+    showInventory,
     !.
 
 capture :-
@@ -286,6 +307,11 @@ capture :-
 capture :-
     inBattle,
     enemyFainted,
+    enemy(NameT,_),
+    (
+        legendary(NameT),retract(legendary(NameT));
+        \+legendary(NameT)
+    ),
     retract(enemy(Name, _)),
     countInventory(Length),
     maxInventory(MAX),
@@ -294,6 +320,7 @@ capture :-
     write(Name), write(' Tertangkap....!!'), nl,
     retract(inBattle),
     retract(enemyFainted),
+    gameEnds,
     !.
 capture :-
     inBattle,
@@ -316,11 +343,21 @@ leave :-
 leave :-
     inBattle,
     enemyFainted,
+    enemy(NameT,_),
+    (
+        legendary(NameT),retract(legendary(NameT));
+        \+legendary(NameT)
+    ),
     retract(enemy(_, _)),
     retract(inBattle),
     retract(enemyFainted),
+    gameEnds,
     !.
 
+gameEnds :-
+    \+ gameOver,
+    legendary(_),
+    !.
 gameEnds :-
     gameOver,
     write('Lo jadi kuyang HAHAHAH!!!'), nl,
@@ -328,6 +365,7 @@ gameEnds :-
     !.
 gameEnds :-
     \+ gameOver,
+    \+ legendary(_),
     write('SELAMAT lo gajadi kayang'), nl,
     quit,
     !.

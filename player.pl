@@ -48,8 +48,27 @@ status :-
 			write('Health   : '),write(Hp),nl,
 			write('Type     : '),write(Type),nl,nl
 		)
-		)),nl,nl,!.
+		)),nl, sisalegend,!.
 
+sisalegend :-
+	write('Tokemon legend yang tersisa'), nl,
+	forall(legendary(LName), 
+	(
+		write(LName), nl
+	)
+	), nl, !.
+
+showInventory :-
+	write('Your tokemon :'),nl,
+	inventory(_,_)->(
+		forall(inventory(Name,Hp),
+		(
+			tokemon(_,Name,Type,_,_,_),
+			write(Name),nl,
+			write('Health   : '),write(Hp),nl,
+			write('Type     : '),write(Type),nl,nl
+		)
+		)),nl,!.
 %---------------------------------------HEAL-------------------------
 /*Jika sedang battle, command dinonaktifkan. Jika tidak sedang battle masuk ke rules heal selanjutnya*/
 heal :-
@@ -112,7 +131,11 @@ pick(Name) :-
 	inventory(Name, _),
 	retract(battleTokemon(_)),
 	asserta(battleTokemon(Name)),
-	format('~w dipilih sebagai battle tokemon ~n',[Name]).
+	format('~w dipilih sebagai battle tokemon ~n',[Name]),
+	(
+		inBattle,battleStatus;
+		\+inBattle	
+	).
 
 /*Fungsi rekursif untuk menghitung anggota List*/
 listCount([], 0) :- !.

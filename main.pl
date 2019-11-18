@@ -53,6 +53,7 @@ start :-
 	nl,
 	write('Game Mulai'),nl,
 	init_player,
+	init_legend,
 	init_map,
 	map,
 	!.

@@ -1,3 +1,4 @@
+:- dynamic(legendary/1).
 /*Tipe Tokemon : Fire, Water, Dark, Nightmare, Light*/ 
 /*Urutan kekuatan: Water>Fire>Light>Dark>Nightmare */
 
@@ -52,15 +53,12 @@ tokemon(49,turtle,water,995,175,210).
 tokemon(50,demon,dark,955,180,200).
 
 /*Legendary(X)*/
-legendary(qilin).
-legendary(vermilion).
-legendary(azuredragon).
-legendary(panlong).
-legendary(tiger).
-legendary(turtle).
-legendary(demon).
-
-
-
-
-
+init_legend :-
+    asserta(legendary(qilin)),
+	asserta(legendary(vermilion)),
+	asserta(legendary(azuredragon)),
+	asserta(legendary(panlong)),
+	asserta(legendary(tiger)),
+	asserta(legendary(turtle)),
+    asserta(legendary(demon)),
+    !.
