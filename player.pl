@@ -104,8 +104,8 @@ showInventory :-
 				HP>=0,
 				tokemon(_,Name,Type,_,NA,SA),
 				write(Name),nl,
-				write('Health  		: '),write(Hp),nl,
-				write('Type  			: '),write(Type),nl,
+                write('Health                  : '),write(Hp),nl,
+				write('Type                    : '),write(Type),nl,
 				write('Normal Attack Damage    : '),write(NA),nl,
 				write('Special Attack Damage   : '),write(SA),nl,nl
 			);
