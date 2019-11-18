@@ -63,7 +63,7 @@ quit :-
 		\+cantRun
 	),
 	(
-		legendary(_),retract(legendary(_));
+		legendary(_),forall(legendary(_),retract(legendary(_)));
 		\+legendary(_)
 	),
 	retract(healAvl(_)),

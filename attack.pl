@@ -40,6 +40,7 @@ battleStart(Index) :-          /*Pesan yang muncul setelah random encounter*/
     !.
 battleStatus :-
     \+battleTokemon(_),!.
+
 battleStatus :-
     countInventory(Length),
     Length =:= 0, 
@@ -57,12 +58,7 @@ battleStatus :-                /*Munculin Nama, Health, dan Tipe Tokemon yang la
         write('Tokemon musuh melemahhh, Serang lagi untuk mengalahkan ...!'),nl
     );
     (
-        HP=<0,
-        retract(inventory(Nama, HP)),
-        write(Nama), write(' pusingg...')
-
-    );
-    (
+        HP>0,
         write('Enemy'), nl,
         write(ENama), nl,
         write('Health   : '), write(EHP), nl,
@@ -71,6 +67,11 @@ battleStatus :-                /*Munculin Nama, Health, dan Tipe Tokemon yang la
         write(Nama), nl,
         write('Health   : '), write(HP), nl,
         write('Tipe     : '), write(Tipe), nl
+    );
+    (
+        HP=<0,
+        retract(inventory(Nama,HP))
+
     )),!.
 
 fight :-
@@ -222,13 +223,15 @@ enemyTurn(Num) :-
     (
         HPNew > 0,
         write(Name), write(' took '), write(Result), write(' damage!'), nl,
+        retract(inventory(Name,HP)),
         asserta(inventory(Name, HPNew))
     );
     (
             HPNew =< 0,
+            retract(inventory(Name,HP)),
+            retract(inventory(Name,HPNew)),
             write(Name), write(' took '), write(Result), write(' damage!'), nl,
-            write(Name), write(' terbantai!!!'),nl,
-            retract(battleTokemon(Name))
+            write(Name), write(' terbantai!!!'),nl
     )),
     (
         battleStatus,
@@ -261,14 +264,15 @@ enemyTurn(Num) :-
     );
     (
         HPNew =< 0,
+        retract(inventory(Name,HP)),
+        retract(inventory(Name,HPNew)),
         write(Name), write(' took '), write(Result), write(' damage!'), nl,
-        write(Name), write(' terbantai!!!'),nl,
-        retract(inventory(Name,HP))    
+        write(Name), write(' terbantai!!!'),nl  
     )),
     asserta(eSpecialUsed),
     (
         battleStatus,
-        afterEnemyTurn,!
+        afterEnemyTurn
     ),!.
 
 afterEnemyTurn :-
@@ -305,15 +309,16 @@ afterEnemyTurn :-
     countInventory(Length),
     \+ (Length =:= 0),
     battleTokemon(Nama),
-    inventory(Nama, HP),
     ((
+        inventory(Nama, HP),
         HP>0
     )
     ;
     (
-    HP =< 0,
-    write('Pilih Tokemon lain'), nl,
-    showInventory
+        \+inventory(Nama,_),
+        write('Pilih Tokemon lain'), nl,
+        retract(battleTokemon(_)),
+        showInventory
     )),
     !.
 
