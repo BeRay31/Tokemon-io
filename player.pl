@@ -128,7 +128,10 @@ pick(Name):-
 	format('lo gapunya ~w di inventory ~n',[Name]),!.
 pick(Name) :-
 	inventory(Name, _),
-	retract(battleTokemon(_)),
+	(
+		(battleTokemon(_), retract(battleTokemon(_)));
+		(\+battleTokemon(_))
+	),
 	asserta(battleTokemon(Name)),
 	format('~w dipilih sebagai battle tokemon ~n',[Name]),
 	(

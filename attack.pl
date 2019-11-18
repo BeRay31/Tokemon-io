@@ -245,7 +245,7 @@ enemyTurn(Num) :-
     );
     (
         HPNew > 0,
-        write(Name), write(' took '), write(ESA), write(' damage!'), nl,
+        write(Name), write(' took '), write(Result), write(' damage!'), nl,
         retract(inventory(Name,HP)),
         asserta(inventory(Name, HPNew))
     )),
