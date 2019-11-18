@@ -38,7 +38,8 @@ battleStart(Index) :-          /*Pesan yang muncul setelah random encounter*/
     write('Bertarung ato kabur?'),
     write(' (Masukkan \'fight.\' untuk bertarung atau \'run.\' untuk jadi pengecut :0)'),nl, 
     !.
-
+battleStatus :-
+    \+battleTokemon(_),!.
 battleStatus :-
     countInventory(Length),
     Length =:= 0, 
@@ -179,7 +180,7 @@ specialAttack :-
     );
     (
         EHPNew > 0,
-        write(EName), write(' menerima '), write(SA), write(' damage!'), nl,
+        write(EName), write(' menerima '), write(Result), write(' damage!'), nl,
         retract(enemy(EName,EHP)),
         asserta(enemy(EName, EHPNew)),
         random(0, 101, R),

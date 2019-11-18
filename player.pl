@@ -129,7 +129,7 @@ pick(Name):-
 pick(Name) :-
 	inventory(Name, _),
 	(
-		(battleTokemon(_), retract(battleTokemon(_)));
+		(battleTokemon(_),retract(battleTokemon(_)));
 		(\+battleTokemon(_))
 	),
 	asserta(battleTokemon(Name)),
