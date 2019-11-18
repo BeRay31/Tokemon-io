@@ -175,7 +175,7 @@ pick(Name) :-
 	(
 		inBattle,battleStatus;
 		\+inBattle	
-	).
+	),!.
 
 /*Fungsi rekursif untuk menghitung anggota List*/
 listCount([], 0) :- !.

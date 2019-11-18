@@ -78,6 +78,10 @@ fight :-
     write('Gabisaa kan gaada yang tokemon yang ngajak ribut'), !.
 fight :-
     inBattle,
+    (
+        (cantRun, retract(cantRun));
+        \+ cantRun    
+    ),
     asserta(cantRun),
     (
         enemyFainted,retract(enemyFainted);
@@ -94,6 +98,10 @@ fight :-
     (
         eSpecialUsed,retract(eSpecialUsed);
         \+eSpecialUsed
+    ),
+    (
+        (enemyFainted, retract(enemyFainted));
+        (\+ enemyFainted)     
     ), 
     battleStatus,
     !.
