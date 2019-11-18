@@ -135,7 +135,7 @@ attack :-
     write('Mau nyerang siapa?????????'), !.
 attack :-
     \+battleTokemon(_),
-    write('Pillih Tokemon dulu !!!'),nl,!.
+    write('Pilih Tokemon dulu !!!'),nl,!.
 attack :-
     inBattle,
     battleTokemon(Name),
