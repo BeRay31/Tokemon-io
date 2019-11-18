@@ -106,7 +106,7 @@ w :-
 	retract(player(X,Y)),
 	Y > 1,
 	YBaru is Y-1,
-	format('Pindah ke -> '),
+	write('Pindah ke -> '),
 	write([X,YBaru]),nl,
 	asserta(player(X,YBaru)),
 	cekPlace(X,YBaru),!.
@@ -128,7 +128,7 @@ d :-
 	lebarPeta(Le),
 	X < Le,
 	XBaru is X+1,
-	format('Pindah ke -> '),
+	write('Pindah ke -> '),
 	write([XBaru,Y]),nl,
 	asserta(player(XBaru,Y)),
 	cekPlace(XBaru,Y),!.
@@ -149,7 +149,7 @@ a :-
 	retract(player(X,Y)),
 	X > 1,
 	XBaru is X-1,
-	format('Pindah ke -> '),
+	write('Pindah ke -> '),
 	write([XBaru,Y]),nl,
 	asserta(player(XBaru,Y)),
 	cekPlace(XBaru,Y),!.
@@ -171,7 +171,7 @@ s :-
 	tinggiPeta(Ti),
 	Y < Ti,
 	YBaru is Y+1,
-	format('Pindah ke -> '),
+	write('Pindah ke -> '),
 	write([X,YBaru]),nl,
 	asserta(player(X,YBaru)),
 	cekPlace(X,YBaru),!.
