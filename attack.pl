@@ -222,14 +222,12 @@ enemyTurn(Num) :-
     (
         HPNew > 0,
         write(Name), write(' took '), write(Result), write(' damage!'), nl,
-        retract(inventory(Name, HP)),
         asserta(inventory(Name, HPNew))
     );
     (
             HPNew =< 0,
             write(Name), write(' took '), write(Result), write(' damage!'), nl,
             write(Name), write(' terbantai!!!'),nl,
-            retract(inventory(Name, HP)),
             retract(battleTokemon(Name))
     )),
     (
