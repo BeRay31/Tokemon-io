@@ -391,13 +391,13 @@ gameEnds :-
     legendary(_),
     !.
 gameEnds :-
-    gameOver,
+    gameOver,nl,
     write('Lo jadi kuyang HAHAHAH!!!'), nl,
     quit,
     !.
 gameEnds :-
     \+ gameOver,
-    \+ legendary(_),
+    \+ legendary(_),nl,
     write('SELAMAT lo gajadi kayang'), nl,
     quit,
     !.
