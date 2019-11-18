@@ -218,17 +218,19 @@ enemyTurn(Num) :-
     write('Tokemon musuh '), write('nyerang '),write(Name), nl,
     typeModifier(ENA, ETipe, Tipe, Result),
     HPNew is HP - Result,
-    ((
-        HPNew =< 0,
-        retract(inventory(Name, HP)),
-        retract(battleTokemon(Name)),
-        write(Name), write(' terbantai!!!')
-    );
+    (
     (
         HPNew > 0,
         write(Name), write(' took '), write(Result), write(' damage!'), nl,
         retract(inventory(Name, HP)),
         asserta(inventory(Name, HPNew))
+    );
+    (
+            HPNew =< 0,
+            write(Name), write(' took '), write(Result), write(' damage!'), nl,
+            write(Name), write(' terbantai!!!'),nl,
+            retract(inventory(Name, HP)),
+            retract(battleTokemon(Name))
     )),
     (
         battleStatus,
@@ -252,21 +254,23 @@ enemyTurn(Num) :-
     write('tokemon musuh nyembur '), write(Name), write(' pake special attack!'), nl,
     typeModifier(ESA, ETipe, Tipe, Result),
     HPNew is HP - Result,
-    ((
-        HPNew =< 0,
-        write(Name), write(' terbantai!!!'),
-        retract(inventory(Name,HP))    
-    );
+    (
     (
         HPNew > 0,
         write(Name), write(' took '), write(Result), write(' damage!'), nl,
         retract(inventory(Name,HP)),
         asserta(inventory(Name, HPNew))
+    );
+    (
+        HPNew =< 0,
+        write(Name), write(' took '), write(Result), write(' damage!'), nl,
+        write(Name), write(' terbantai!!!'),nl,
+        retract(inventory(Name,HP))    
     )),
     asserta(eSpecialUsed),
     (
         battleStatus,
-        afterEnemyTurn
+        afterEnemyTurn,!
     ),!.
 
 afterEnemyTurn :-
@@ -276,7 +280,7 @@ afterEnemyTurn :-
         \+specialUsed
     ),
     (
-         eSpecialUsed,retract(specialUsed);
+         eSpecialUsed,retract(eSpecialUsed);
         \+eSpecialUsed
     ),
     !.
@@ -287,14 +291,14 @@ afterEnemyTurn :-
     asserta(gameOver),
     retract(inBattle),
     retract(enemy(_, _)),
-    (
+    ((
         specialUsed,retract(specialUsed);
         \+specialUsed
     ),
     (
         eSpecialUsed,retract(specialUsed);
         \+eSpecialUsed
-    ),
+    )),
     retract(cantRun),
     gameEnds,
     !. 
