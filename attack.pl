@@ -80,6 +80,10 @@ fight :-
     inBattle,
     asserta(cantRun),
     (
+        enemyFainted,retract(enemyFainted);
+        \+enemyFainted
+    ),
+    (
         battleTokemon(_);
         write('Choose '), showInventory
     ),
@@ -209,6 +213,7 @@ enemyTurn(Num) :-
     ((
         HPNew =< 0,
         retract(inventory(Name, HP)),
+        retract(battleTokemon(Name)),
         write(Name), write(' terbantai!!!')
     );
     (
@@ -327,6 +332,7 @@ capture :-
     write(Name), write(' Tertangkap....!!'), nl,
     retract(inBattle),
     retract(enemyFainted),
+    retract(cantRun),
     gameEnds,
     !.
 capture :-
@@ -358,6 +364,7 @@ leave :-
     retract(enemy(_, _)),
     retract(inBattle),
     retract(enemyFainted),
+    retract(cantRun),
     gameEnds,
     !.
 

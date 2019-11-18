@@ -26,8 +26,46 @@ quit :-
 /*Mengeluarkan player dari permainan*/
 quit :- 
 	retract(player(_,_)),
-	retract(battleTokemon(_)),
-	retract(inventory(_,_)),
+	(
+		battleTokemon(_),retract(battleTokemon(_));
+		\+battleTokemon(_)
+	),
+	(
+		inventory(_,_),retract(inventory(_,_));
+		\+inventory(_,_)
+	),
+	(
+		inBattle,retract(inBattle);
+		\+inBattle
+	),
+	(
+		enemy(_,_),retract(enemy(_,_));
+		\+enemy(_,_)
+	),
+	(
+		enemyFainted,retract(enemyFainted);
+		\+enemyFainted
+	),
+	(
+		specialUsed,retract(specialUsed);
+		\+specialUsed
+	),
+	(
+		eSpecialUsed,retract(eSpecialUsed);
+		\+eSpecialUsed
+	),
+	(
+		gameOver,retract(gameOver);
+		\+gameOver
+	),
+	(
+		cantRun,retract(cantRun);
+		\+cantRun
+	),
+	(
+		legendary(_),retract(legendary(_));
+		\+legendary(_)
+	),
 	retract(healAvl(_)),
 	retract(lebarPeta(_)),
 	retract(tinggiPeta(_)),
