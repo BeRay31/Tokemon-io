@@ -72,7 +72,7 @@ quit :-
 	retract(gym(_,_)),
 	retract(obstacle(_,_)),
 	retract(maxInventory(_)),
-	retract(main(_)).
+	retract(main(_)),!,.
 
 /*Menuliskan status tokemon dengan rincian nama, health, dan type.*/	
 status :-
