@@ -12,7 +12,7 @@ help :-
 	write('7. s : Bergerak kearah Selatan(bawah).'),nl,
 	write('8. map : menampilkan peta.'),nl,
 	write('9. heal : Mengobati semua tokemon yang ada di inventory.'),nl,
-	write('10. status : Melihat status diri.'),nl,
+	write('10. status : Melihat tokemon di inventory dan legendary yang tersisa.'),nl,
 	write('11. pick(tokemon) : Memilih Pokemon untuk digunakan .'),nl,
 	write('12. attack : Melakukan Normal attack .'),nl,
 	write('13. specialattack : Melakukan Special attack pada musuh.'),nl,
