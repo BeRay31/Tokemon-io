@@ -31,7 +31,7 @@ quit :-
 		\+battleTokemon(_)
 	),
 	(
-		inventory(_,_),retract(inventory(_,_));
+		inventory(_,_),forall(inventory(_,_),retract(inventory(_,_)));
 		\+inventory(_,_)
 	),
 	(
@@ -70,9 +70,9 @@ quit :-
 	retract(lebarPeta(_)),
 	retract(tinggiPeta(_)),
 	retract(gym(_,_)),
-	retract(obstacle(_,_)),
+	forall(obstacle(_,_),retract(obstacle(_,_))),
 	retract(maxInventory(_)),
-	retract(main(_)),!,.
+	retract(main(_)),!.
 
 /*Menuliskan status tokemon dengan rincian nama, health, dan type.*/	
 status :-
