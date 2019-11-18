@@ -38,7 +38,8 @@ battleStart(Index) :-          /*Pesan yang muncul setelah random encounter*/
     write('Bertarung ato kabur?'),
     write(' (Masukkan \'fight.\' untuk bertarung atau \'run.\' untuk jadi pengecut :0)'),nl, 
     !.
-
+battleStatus :-
+    \+battleTokemon(_),!.
 battleStatus :-
     countInventory(Length),
     Length =:= 0, 
