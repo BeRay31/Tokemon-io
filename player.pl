@@ -83,7 +83,6 @@ status :-
 	inBattle,
 	showInventory,!.
 status :-
-	write('Your tokemon :'),nl,
 	showInventory,nl, sisalegend,!.
 
 sisalegend :-
