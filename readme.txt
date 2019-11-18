@@ -36,7 +36,8 @@ MEKANISME BATTLE
 	Jika tokemon yang lebih lemah menyerang tokemon yang lebih kuat, maka damage yang diterima tokemon 
 	yang lebih kuat adalah setengah dari attack yang diberikan tokemon lemah. Jika tokemon yang lebih 
 	kuat menyerang tokemon yang lebih lemah, maka damage yang diterima tokemon yang lemah adalah 3/2 
-	dari attack yang diberikan tokemon kuat.
+	dari attack yang diberikan tokemon kuat. Jika tokemon yang diserang bertipe sama, maka damage yang diterima 
+	tetap sama.
 		Player dinyatakan menang, jika tokemon legendary sudah dikalahkan semua atau semua tokemon 
 	legendary sudah terdapat di inventori. Player dinyatakan kalah, jika semua pokemon dalam inventorinya
 	mati semua. 
