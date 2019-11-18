@@ -132,7 +132,7 @@ run :-
 
 attack :-
     \+ inBattle,
-    write('Ma nyerang siapa?????????'), !.
+    write('Mau nyerang siapa?????????'), !.
 attack :-
     \+battleTokemon(_),
     write('Pillih Tokemon dulu !!!'),nl,!.

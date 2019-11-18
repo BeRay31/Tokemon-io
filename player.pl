@@ -80,16 +80,11 @@ status :-
 	write('Ente belum mulai main gayn'), nl,
 	!.
 status :-
+	inBattle,
+	showInventory,!.
+status :-
 	write('Your tokemon :'),nl,
-	inventory(_,_)->(
-		forall(inventory(Name,Hp),
-		(
-			tokemon(_,Name,Type,_,_,_),
-			write(Name),nl,
-			write('Health   : '),write(Hp),nl,
-			write('Type     : '),write(Type),nl,nl
-		)
-		)),nl, sisalegend,!.
+	showInventory,nl, sisalegend,!.
 
 sisalegend :-
 	write('Tokemon legend yang tersisa'), nl,
@@ -104,10 +99,20 @@ showInventory :-
 	inventory(_,_)->(
 		forall(inventory(Name,Hp),
 		(
-			tokemon(_,Name,Type,_,_,_),
-			write(Name),nl,
-			write('Health   : '),write(Hp),nl,
-			write('Type     : '),write(Type),nl,nl
+			tokemon(_,Name,Type,_,NA,SA),
+			((
+				inventory(Name,HP),
+				HP>=0,
+				tokemon(_,Name,Type,_,NA,SA),
+				write(Name),nl,
+				write('Health  		: '),write(Hp),nl,
+				write('Type  			: '),write(Type),nl,
+				write('Normal Attack Damage    : '),write(NA),nl,
+				write('Special Attack Damage   : '),write(SA),nl,nl
+			);
+			(
+				HP<0
+			))
 		)
 		)),nl,!.
 %---------------------------------------HEAL-------------------------
@@ -175,6 +180,9 @@ pick(_) :-
 pick(Name):-
 	\+ inventory(Name,_),
 	format('lo gapunya ~w di inventory ~n',[Name]),!.
+pick(Name) :-
+	battleTokemon(Name),
+	format('~w Sudah lo pilih ANJIR!!!!, mau dianggap apa dia!!!!',[Name]),!.
 pick(Name) :-
 	inventory(Name, _),
 	(

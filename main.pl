@@ -17,9 +17,8 @@ help :-
 	write('12. attack : Melakukan Normal attack .'),nl,
 	write('13. specialattack : Melakukan Special attack pada musuh.'),nl,
 	write('14. run : Memilih lari (dalam battle).'),nl,
+	write('15. fight : Memilih bertarung(dalam battle'),nl,
 	write('15. drop(tokemon) : Menghilangkan tokemon dalam inventory.'),nl,
-	write('16. save (filename) : menyimpan data permainan saat ini dengan nama file tertentu.'),nl,
-	write('17. load (filename) : Memuat data permainan dari file eksternal.'),nl,
 	write('Catatan : Semua command di atas diakhiri titik (Misal : "help.")'), nl, !.
 
 %-------------------------------START------------------------------------------------
